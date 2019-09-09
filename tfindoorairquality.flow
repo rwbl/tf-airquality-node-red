@@ -1,0 +1,920 @@
+[
+    {
+        "id": "c4fa304b.12ff7",
+        "type": "tab",
+        "label": "IndoorAirQualityMonitor",
+        "disabled": false,
+        "info": "Indoor Air Quality Monitor\nusing Tinkerforge Building Blocks\n\n20190909\nRobert W.B. Linn"
+    },
+    {
+        "id": "72e48b3d.b53244",
+        "type": "comment",
+        "z": "c4fa304b.12ff7",
+        "name": "Description",
+        "info": "",
+        "x": 80,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "b46c7f65.79634",
+        "type": "mqtt out",
+        "z": "c4fa304b.12ff7",
+        "name": "Set Callback Configuration",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "broker": "574c6d3.c9a6294",
+        "x": 1240,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "c4c202d.11228",
+        "type": "function",
+        "z": "c4fa304b.12ff7",
+        "name": "Build Callback Configuration Message",
+        "func": "// Set the AQB Callback Configuration\n// Get the callback period in ms\nvar callbackPeriod = flow.get(\"callbackPeriod\");\n\n// Set message with Topic and Payload\nmsg.topic = \"tinkerforge/request/air_quality_bricklet/Jvj/set_all_values_callback_configuration\";\nmsg.payload = {\"period\": callbackPeriod, \"value_has_to_change\": false}; \n  \nreturn msg;  \n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 930,
+        "y": 100,
+        "wires": [
+            [
+                "b46c7f65.79634",
+                "128dbbe5.dc6f34"
+            ]
+        ]
+    },
+    {
+        "id": "8fbc8c41.a1041",
+        "type": "inject",
+        "z": "c4fa304b.12ff7",
+        "name": "Inject Callback Period",
+        "topic": "",
+        "payload": "10000",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.1",
+        "x": 140,
+        "y": 100,
+        "wires": [
+            [
+                "d47b09ea.e52668"
+            ]
+        ]
+    },
+    {
+        "id": "ffb41e81.c5ca6",
+        "type": "debug",
+        "z": "c4fa304b.12ff7",
+        "name": "DEBUG Set flow.callbackPeriod",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 670,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "128dbbe5.dc6f34",
+        "type": "debug",
+        "z": "c4fa304b.12ff7",
+        "name": "DEBUG Set Callback Configuration",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 1260,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "f764bb27.2ed138",
+        "type": "debug",
+        "z": "c4fa304b.12ff7",
+        "name": "DEBUG Data",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 450,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "341f4373.eef5ac",
+        "type": "json",
+        "z": "c4fa304b.12ff7",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 430,
+        "y": 420,
+        "wires": [
+            [
+                "4ef53729.c0fb38",
+                "f764bb27.2ed138",
+                "98a31389.4ca3e",
+                "60f976bf.d29fe8",
+                "5667b9b1.54c458",
+                "ae18c029.2e60a"
+            ]
+        ]
+    },
+    {
+        "id": "52837385.093f4c",
+        "type": "ui_gauge",
+        "z": "c4fa304b.12ff7",
+        "name": "Gauge iaq_Index",
+        "group": "c4f182e3.3ffd9",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "IAQ Index",
+        "label": "",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "250",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 910,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "e2465c0c.9e97",
+        "type": "ui_chart",
+        "z": "c4fa304b.12ff7",
+        "name": "Chart iaq_Index",
+        "group": "c4f182e3.3ffd9",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "label": "",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm",
+        "interpolate": "bezier",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "1",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "86400",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "outputs": 1,
+        "x": 900,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4ef53729.c0fb38",
+        "type": "change",
+        "z": "c4fa304b.12ff7",
+        "name": "Set iaq_index",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.iaq_index",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 620,
+        "y": 420,
+        "wires": [
+            [
+                "52837385.093f4c",
+                "e2465c0c.9e97",
+                "353a1287.4ca7ce"
+            ]
+        ]
+    },
+    {
+        "id": "6a3c42ef.60dd3c",
+        "type": "mqtt in",
+        "z": "c4fa304b.12ff7",
+        "name": "",
+        "topic": "tinkerforge/#",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "574c6d3.c9a6294",
+        "x": 90,
+        "y": 420,
+        "wires": [
+            [
+                "bbcf359d.314cb8"
+            ]
+        ]
+    },
+    {
+        "id": "bbcf359d.314cb8",
+        "type": "switch",
+        "z": "c4fa304b.12ff7",
+        "name": "Select Topic",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "tinkerforge/callback/air_quality_bricklet/Jvj/all_values",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 270,
+        "y": 420,
+        "wires": [
+            [
+                "341f4373.eef5ac"
+            ]
+        ]
+    },
+    {
+        "id": "d47b09ea.e52668",
+        "type": "ui_text_input",
+        "z": "c4fa304b.12ff7",
+        "name": "Set Callback Period",
+        "label": "Callback Period (ms)",
+        "tooltip": "",
+        "group": "36e88faf.469a3",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "number",
+        "delay": "0",
+        "topic": "",
+        "x": 390,
+        "y": 100,
+        "wires": [
+            [
+                "ffb41e81.c5ca6",
+                "40ad16b.c5f1ae8"
+            ]
+        ]
+    },
+    {
+        "id": "91e932b3.96d15",
+        "type": "ui_switch",
+        "z": "c4fa304b.12ff7",
+        "name": "Set Callback Register",
+        "label": "Callback Register",
+        "tooltip": "",
+        "group": "36e88faf.469a3",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "tinkerforge/register/air_quality_bricklet/Jvj/all_values",
+        "style": "",
+        "onvalue": "{\"register\":true}",
+        "onvalueType": "json",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "{\"register\":false}",
+        "offvalueType": "json",
+        "officon": "",
+        "offcolor": "",
+        "x": 400,
+        "y": 200,
+        "wires": [
+            [
+                "484c94d5.5aedcc",
+                "d5f36b70.0d2ed8"
+            ]
+        ]
+    },
+    {
+        "id": "484c94d5.5aedcc",
+        "type": "mqtt out",
+        "z": "c4fa304b.12ff7",
+        "name": "Set Callback Register",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "broker": "574c6d3.c9a6294",
+        "x": 1220,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "40ad16b.c5f1ae8",
+        "type": "change",
+        "z": "c4fa304b.12ff7",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "callbackPeriod",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 640,
+        "y": 100,
+        "wires": [
+            [
+                "c4c202d.11228"
+            ]
+        ]
+    },
+    {
+        "id": "840b5102.93a88",
+        "type": "inject",
+        "z": "c4fa304b.12ff7",
+        "name": "Inject Callback Register True",
+        "topic": "tinkerforge/register/air_quality_bricklet/Jvj/all_values",
+        "payload": "{\"register\":true}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.2",
+        "x": 160,
+        "y": 200,
+        "wires": [
+            [
+                "91e932b3.96d15"
+            ]
+        ]
+    },
+    {
+        "id": "d5f36b70.0d2ed8",
+        "type": "debug",
+        "z": "c4fa304b.12ff7",
+        "name": "DEBUG Set Callback Register",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 670,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "98a31389.4ca3e",
+        "type": "change",
+        "z": "c4fa304b.12ff7",
+        "name": "Set temperature",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.temperature",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "$round(payload * 0.01, 0)",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 620,
+        "y": 620,
+        "wires": [
+            [
+                "cf348eed.5df56",
+                "bc2fbfe.994f14"
+            ]
+        ]
+    },
+    {
+        "id": "cf348eed.5df56",
+        "type": "ui_gauge",
+        "z": "c4fa304b.12ff7",
+        "name": "Gauge temperature",
+        "group": "9fed8aca.b64518",
+        "order": 1,
+        "width": "3",
+        "height": "3",
+        "gtype": "gage",
+        "title": "Temperature",
+        "label": "°C",
+        "format": "{{value}}",
+        "min": "15",
+        "max": "30",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 910,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "bc2fbfe.994f14",
+        "type": "ui_chart",
+        "z": "c4fa304b.12ff7",
+        "name": "Chart temperature",
+        "group": "9fed8aca.b64518",
+        "order": 2,
+        "width": "3",
+        "height": "3",
+        "label": "",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm",
+        "interpolate": "bezier",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "1",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "86400",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "outputs": 1,
+        "x": 910,
+        "y": 660,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "60f976bf.d29fe8",
+        "type": "change",
+        "z": "c4fa304b.12ff7",
+        "name": "Set humidity",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.humidity",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "$round(payload * 0.01, 0)",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 610,
+        "y": 700,
+        "wires": [
+            [
+                "94af3647.0cf878",
+                "153b67b4.596a48"
+            ]
+        ]
+    },
+    {
+        "id": "94af3647.0cf878",
+        "type": "ui_gauge",
+        "z": "c4fa304b.12ff7",
+        "name": "Gauge humidity",
+        "group": "9fed8aca.b64518",
+        "order": 3,
+        "width": "3",
+        "height": "3",
+        "gtype": "gage",
+        "title": "Humidity",
+        "label": "%RH",
+        "format": "{{value}}",
+        "min": "25",
+        "max": "90",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 900,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "153b67b4.596a48",
+        "type": "ui_chart",
+        "z": "c4fa304b.12ff7",
+        "name": "Chart humidity",
+        "group": "9fed8aca.b64518",
+        "order": 4,
+        "width": "3",
+        "height": "3",
+        "label": "",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm",
+        "interpolate": "bezier",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "1",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "86400",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "outputs": 1,
+        "x": 900,
+        "y": 740,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5667b9b1.54c458",
+        "type": "change",
+        "z": "c4fa304b.12ff7",
+        "name": "Set air_pressure",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.air_pressure",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "$round(payload * 0.01, 0)",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 620,
+        "y": 780,
+        "wires": [
+            [
+                "791ea113.ba0a6",
+                "7a2190ef.62931"
+            ]
+        ]
+    },
+    {
+        "id": "791ea113.ba0a6",
+        "type": "ui_gauge",
+        "z": "c4fa304b.12ff7",
+        "name": "Gauge air_pressure",
+        "group": "9fed8aca.b64518",
+        "order": 5,
+        "width": "3",
+        "height": "3",
+        "gtype": "gage",
+        "title": "Air Pressure",
+        "label": "mbar",
+        "format": "{{value}}",
+        "min": "950",
+        "max": "1050",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 920,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "7a2190ef.62931",
+        "type": "ui_chart",
+        "z": "c4fa304b.12ff7",
+        "name": "Chart air_pressure",
+        "group": "9fed8aca.b64518",
+        "order": 6,
+        "width": "3",
+        "height": "3",
+        "label": "",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm",
+        "interpolate": "bezier",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "1",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "86400",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "outputs": 1,
+        "x": 910,
+        "y": 820,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d0989b32.a27058",
+        "type": "comment",
+        "z": "c4fa304b.12ff7",
+        "name": "Settings",
+        "info": "",
+        "x": 80,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "39286911.772666",
+        "type": "comment",
+        "z": "c4fa304b.12ff7",
+        "name": "Data",
+        "info": "",
+        "x": 70,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "859d08f8.539d68",
+        "type": "ui_text",
+        "z": "c4fa304b.12ff7",
+        "group": "c4f182e3.3ffd9",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "name": "Text iaq_index_accuracy",
+        "label": "Accuracy",
+        "format": "{{value}}",
+        "layout": "row-spread",
+        "x": 930,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "ae18c029.2e60a",
+        "type": "change",
+        "z": "c4fa304b.12ff7",
+        "name": "Set iaq_index_accuracy",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.iaq_index_accuracy",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 650,
+        "y": 540,
+        "wires": [
+            [
+                "859d08f8.539d68"
+            ]
+        ]
+    },
+    {
+        "id": "46e1ad03.078994",
+        "type": "ui_button",
+        "z": "c4fa304b.12ff7",
+        "name": "Clear Charts",
+        "group": "36e88faf.469a3",
+        "order": 3,
+        "width": "2",
+        "height": "1",
+        "passthru": false,
+        "label": "Clear Charts",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "[]",
+        "payloadType": "json",
+        "topic": "",
+        "x": 690,
+        "y": 300,
+        "wires": [
+            [
+                "e2465c0c.9e97",
+                "153b67b4.596a48",
+                "7a2190ef.62931",
+                "cf348eed.5df56"
+            ]
+        ]
+    },
+    {
+        "id": "70968d5f.63c944",
+        "type": "inject",
+        "z": "c4fa304b.12ff7",
+        "name": "Inject Clear Chart",
+        "topic": "",
+        "payload": "[]",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "0.2",
+        "x": 120,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2bbfae2c.df5232",
+        "type": "ui_text",
+        "z": "c4fa304b.12ff7",
+        "group": "c4f182e3.3ffd9",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "name": "Text Air Quality",
+        "label": "Air Quality",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 900,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "353a1287.4ca7ce",
+        "type": "function",
+        "z": "c4fa304b.12ff7",
+        "name": "Set Air Quality",
+        "func": "var index = msg.payload;\nvar airquality = \"unknown\";\n\nif (index >= 0 && index <= 50) { airquality=\"good\";}\nif (index > 50 && index <= 100) { airquality=\"average\";}\nif (index > 100 && index <= 150) { airquality=\"little bad\";}\nif (index > 150 && index <= 200) { airquality=\"bad\";}\nif (index > 200 && index <= 300) { airquality=\"worse\";}\nif (index > 300 && index <= 500) { airquality=\"very bad\";}\n\nmsg.payload = airquality;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 660,
+        "y": 500,
+        "wires": [
+            [
+                "2bbfae2c.df5232"
+            ]
+        ]
+    },
+    {
+        "id": "574c6d3.c9a6294",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "Broker Localhost",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "c4f182e3.3ffd9",
+        "type": "ui_group",
+        "z": "",
+        "name": "Air Quality",
+        "tab": "6fb94b50.7b98c4",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "36e88faf.469a3",
+        "type": "ui_group",
+        "z": "",
+        "name": "Settings",
+        "tab": "6fb94b50.7b98c4",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "9fed8aca.b64518",
+        "type": "ui_group",
+        "z": "",
+        "name": "Environment",
+        "tab": "6fb94b50.7b98c4",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "6fb94b50.7b98c4",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Indoor Air Quality Monitor",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
