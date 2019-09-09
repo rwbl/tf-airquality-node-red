@@ -284,5 +284,3 @@ Example published payload JSON string:
 ```
 For each of the properties a change node converts the property to a payload
 This payload is used by Dashboard Gauge, Chart and other nodes.
-
-Thats it for a start.
