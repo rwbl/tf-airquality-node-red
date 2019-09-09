@@ -3,6 +3,8 @@
 ## Objectives
 To display data from the Tinkerforge Air Quality Bricklet in a Node-RED dashboard using MQTT.
 
+![tfindoorairquality-dashboard](https://user-images.githubusercontent.com/47274144/64522178-ba8cf380-d2f9-11e9-88ca-c8cc59b9d7ef.png)
+
 ## Solution
 The Tinkerforge Air Quality Bricklet is connected to a Tinkerforge Master brick = the Tinkerforge Building Blocks.
 The Master Brick is connected via USB with a Raspberry Pi 4 running Node-RED.
@@ -232,9 +234,10 @@ tinkerforge/response/air_quality_bricklet/Jvj/get_all_values {"iaq_index": 90, "
 So far so good - lets start building Node-RED Dashboard solution.
 
 ### Node-RED
-
 The flow has two sections settings and data.
 The communication with the Tinkerforge Building Blocks is via MQTT.
+
+![tfindoorairquality-dashboard-flow](https://user-images.githubusercontent.com/47274144/64522177-ba8cf380-d2f9-11e9-9762-120ce0c0f658.png)
 
 #### MQTT
 The nodes mqtt in and mqtt out are used.
