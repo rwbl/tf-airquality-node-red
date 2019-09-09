@@ -243,19 +243,27 @@ The communication with the Tinkerforge Building Blocks is via MQTT.
 The nodes mqtt in and mqtt out are used.
 To update the settings, i.e. the Tinkerforge Air Quality Bricklet configuration, the mqtt out node is used.
 The topics to publish messages are (Javascript code from the function node):
+```
 msg.topic = "tinkerforge/request/air_quality_bricklet/Jvj/set_all_values_callback_configuration";
 msg.payload = {"period": callbackPeriod, "value_has_to_change": false}; 
-and
+```
+and (Topic and Payload from a ui_switch node)
+```
 tinkerforge/register/air_quality_bricklet/Jvj/all_values
 {"register":true} or {"register":false}
+```
 
 To get data from the Tinkerforge Air Quality Bricklet, the mqtt in node is used.
 The topic to subscribe to messages is:
+```
 tinkerforge/#
+```
 This means all messages published by Tinkerforge MQTT Python script are coming in.
 A switch node is used to select a topic. This enables to use multiple bricklets.
 For this solution, only one bricklet is used:
+```
 tinkerforge/callback/air_quality_bricklet/Jvj/all_values
+```
 
 #### Settings
 The settings enables to set the callback configuration and the callback register.
@@ -271,7 +279,9 @@ The configuration is changed via mqtt out node.
 Incoming MQTT messages are filtered by topic, only one topic used for now.
 The payload is converted to a JavaScript object to get the payload properties containing the data.
 Example published payload JSON string:
+```
 {"iaq_index":51,"iaq_index_accuracy":"low","temperature":2190,"humidity":6091,"air_pressure":101391}
+```
 For each of the properties a change node converts the property to a payload
 This payload is used by Dashboard Gauge, Chart and other nodes.
 
