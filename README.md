@@ -1,4 +1,4 @@
-# Tinkerforge Air Quality Dashboard Node-RED
+# Tinkerforge Air Quality Node-RED Dashboard
 
 ## Objectives
 To display data from the Tinkerforge Air Quality Bricklet in a Node-RED dashboard using MQTT.
